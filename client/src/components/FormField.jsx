@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const FormField = ({
   labelName,
@@ -9,36 +9,54 @@ const FormField = ({
   handleChange,
   isSurpriseMe,
   handleSurpriseMe,
-}) => (
-  <div>
-    <div className="flex items-center gap-2 mb-2">
-      <label
-        htmlFor={name}
-        className="block text-sm font-medium text-gray-900"
-      >
-        {labelName}
-      </label>
-      {isSurpriseMe && (
-        <button
-          type="button"
-          onClick={handleSurpriseMe}
-          className="font-semibold text-xs bg-[#EcECF1] py-1 px-2 rounded-[5px] text-black"
+}) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  return (
+    <div className="relative w-full p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg transition-all duration-300 hover:shadow-2xl group">
+      <div className="flex items-center justify-between mb-3">
+        <label
+          htmlFor={name}
+          className="block text-sm font-semibold text-white"
         >
-          Surprise me
-        </button>
-      )}
+          {labelName}
+        </label>
+
+        {isSurpriseMe && (
+          <div
+            className="relative"
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          >
+            <button
+              type="button"
+              onClick={handleSurpriseMe}
+              className="text-xs font-medium text-black bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 hover:from-purple-500 hover:to-pink-500 px-3 py-1 rounded-md transition-all duration-300"
+            >
+              🎲 Surprise me
+            </button>
+
+            {showTooltip && (
+              <div className="absolute top-[-40px] right-0 bg-black text-white text-xs px-3 py-2 rounded-md shadow-md z-10 opacity-90">
+                Generate a random idea!
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      <input
+        type={type}
+        id={name}
+        name={name}
+        className="w-full p-3 text-sm text-black placeholder:text-gray-300 border border-white/30 rounded-lg bg-white/5 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all"
+        placeholder={placeholder}
+        value={value}
+        onChange={handleChange}
+        required
+      />
     </div>
-    <input
-      type={type}
-      id={name}
-      name={name}
-      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#6469ff] focus:border-[#6469ff] outline-none block w-full p-3"
-      placeholder={placeholder}
-      value={value}
-      onChange={handleChange}
-      required
-    />
-  </div>
-);
+  );
+};
 
 export default FormField;
