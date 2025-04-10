@@ -33,7 +33,7 @@ const CreatePost = () => {
         const formData = new FormData();
         formData.append('prompt', form.prompt);
 
-        const response = await fetch('http://localhost:8080/api/v1/dalle', {
+        const response = await fetch('https://ai-image-geneartor-mern-1.onrender.com/api/v1/dalle', {
           method: 'POST',
           body: formData,
         });
@@ -68,7 +68,7 @@ const CreatePost = () => {
 
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8080/api/v1/post', { // Replace with correct API endpoint
+      const response = await fetch('https://ai-image-geneartor-mern-1.onrender.com/api/v1/post', { // Replace with correct API endpoint
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -116,7 +116,7 @@ const CreatePost = () => {
               labelName="Your Name"
               type="text"
               name="name"
-              placeholder="Ex., John Doe"
+              placeholder="Enter your name"
               value={form.name}
               handleChange={handleChange}
             />
@@ -125,14 +125,14 @@ const CreatePost = () => {
               labelName="Prompt"
               type="text"
               name="prompt"
-              placeholder="An Impressionist oil painting of sunflowers in a purple vase…"
+              placeholder="Enter a Prompt to generate a image "
               value={form.prompt}
               handleChange={handleChange}
               isSurpriseMe
               handleSurpriseMe={handleSurpriseMe}
             />
 
-            <div className="relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-120 h-85 flex justify-center items-center self-center">
+            <div className="relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-97 h-97 flex justify-center items-center self-center">
               {form.photo ? (
                 <img src={form.photo} alt={form.prompt} className="w-full h-full object-contain" />
               ) : (
@@ -140,7 +140,7 @@ const CreatePost = () => {
               )}
 
               {generatingImg && (
-                <div className="absolute inset-0 z-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] rounded-lg">
+                <div className=" absolute inset-0 z-0 flex justify-center items-center bg-black/50 backdrop-blur-md rounded-2xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105">
                   <Loader />
                 </div>
               )}
@@ -151,7 +151,7 @@ const CreatePost = () => {
             <button
               type="button"
               onClick={generateImage}
-              className="text-white bg-green-700  font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+              className="w-full sm:w-auto mt-3 px-5 py-2.5 text-sm text-white text-center font-medium rounded-md bg-green-700 hover:bg-green-800 transition-colors duration-200"
             >
               {generatingImg ? 'Generating...' : 'Generate'}
             </button>
@@ -163,7 +163,7 @@ const CreatePost = () => {
             </p>
             <button
               type="submit"
-              className="mt-3 text-white bg-[#6469ff] font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+              className="mt-3 w-full sm:w-auto px-5 py-2.5 text-sm text-white text-center font-medium rounded-md bg-[#6469ff] hover:bg-[#4e54d3] transition-colors duration-200 "
             >
               {loading ? 'Sharing...' : 'Share with the Community'}
             </button>
